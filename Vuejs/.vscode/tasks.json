@@ -1,0 +1,16 @@
+{
+
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build TodoApp",
+            "command": "dotnet build ./TodoApi/TodoApi.csproj",
+            "type": "shell",
+            "group": "build",
+            "presentation":{
+                "reveal":"always"
+            },
+            "problemMatcher":"$msCompile"
+        }  
+     ]
+}
