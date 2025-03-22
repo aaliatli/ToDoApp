@@ -10,38 +10,36 @@ IConfigurationBuilder configurationBuilder = builder.Configuration.AddJsonFile("
                       .AddEnvironmentVariables()
                       .AddCommandLine(args);
 
-// Veritabanı bağlantı dizesini alın
 string connectionString = builder.Configuration.GetConnectionString("DefaultConnection")??"localDb";
 
-// Entity Framework Core kullanarak MSSQL bağlantısını ekleyin
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 
-// CORS'u yapılandırın
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin",
         policy =>
         {
-            policy.WithOrigins("http://localhost:5173") // Vue.js uygulamanızın adresi
+            policy.WithOrigins("http://localhost:5173") 
                    .AllowAnyHeader()
                    .AllowAnyMethod();
         });
 });
 
-// Swagger/OpenAPI için servisleri ekleyinz
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Your API", Version = "v1" });
 });
 
-// Controller servislerini ekleyin
+
 builder.Services.AddControllers();
 
 var app = builder.Build();
 
-// Middleware'leri ekleyin
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -57,12 +55,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseRouting();
 
-// CORS'u kullanın
-app.UseCors("AllowSpecificOrigin");
 
-// Authorization ve Authentication işlemlerini ekleyin (eğer gerekiyorsa)
-// app.UseAuthentication();
-// app.UseAuthorization();
+app.UseCors("AllowSpecificOrigin");
 
 app.MapControllers();
 
