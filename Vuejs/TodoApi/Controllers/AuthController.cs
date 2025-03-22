@@ -24,7 +24,6 @@ public class AuthController : ControllerBase
             return NotFound("Invalid username or password");
         }
 
-        // Kullanıcıyı başarılı bir şekilde doğruladıktan sonra, TodoAppController'a yönlendirebilirsiniz
         return Ok(user);
     }
 
